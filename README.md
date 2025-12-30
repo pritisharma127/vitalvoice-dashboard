@@ -11,6 +11,9 @@ A web dashboard for managing blood requests, finding donors, and tracking voice-
 - Campaign and call tracking: log voice-agent call transactions
 - Integration-ready: REST endpoints exposed via Supabase Edge Functions
 
+## Architecture
+![Alt text](./assets/VitalVoice-Architecture_2.png)
+
 ## Quick Start
 
 Prerequisites
