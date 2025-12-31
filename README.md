@@ -14,6 +14,9 @@ A web dashboard for managing blood requests, finding donors, and tracking voice-
 ## Architecture
 ![Alt text](./assets/VitalVoice-Architecture_2.png)
 
+## Elevenlabs Voice Agent Architecture
+![Alt text](./assets/VitalVoice-VoiceAI.png)
+
 ## Quick Start
 
 Prerequisites
