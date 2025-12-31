@@ -1,0 +1,466 @@
+{
+  "info": {
+    "_postman_id": "vitalvoice-blood-bank-api",
+    "name": "VitalVoice Blood Bank API",
+    "description": "Complete API collection for VitalVoice Blood Bank Network Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://rgrsvvbnvadtdpmwmiyq.supabase.co/functions/v1",
+      "type": "string"
+    },
+    {
+      "key": "anon_key",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJncnN2dmJudmFkdGRwbXdtaXlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3NDE5OTgsImV4cCI6MjA4MjMxNzk5OH0.5pe8BcbtIS3oAA3qcGWoRTn-RR68TlrnGLej3-0zXXc",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Blood Requests",
+      "item": [
+        {
+          "name": "List All Blood Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/blood-requests?page=1&limit=10&status=pending",
+              "host": ["{{base_url}}"],
+              "path": ["blood-requests"],
+              "query": [
+                { "key": "page", "value": "1", "description": "Page number (default: 1)" },
+                { "key": "limit", "value": "10", "description": "Items per page (default: 10, max: 100)" },
+                { "key": "status", "value": "pending", "description": "Filter by status: pending, in_progress, fulfilled, cancelled" }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"request_id\": \"REQ-ABC123\",\n      \"patient_name\": \"John Doe\",\n      \"patient_age\": 45,\n      \"patient_gender\": \"male\",\n      \"blood_type\": \"O+\",\n      \"quantity_units\": 2,\n      \"urgency\": \"urgent\",\n      \"status\": \"pending\",\n      \"hospital_name\": \"City General Hospital\",\n      \"hospital_city\": \"Bangalore\",\n      \"hospital_zipcode\": \"560001\",\n      \"caretaker_name\": \"Jane Doe\",\n      \"caretaker_phone\": \"+919876543210\",\n      \"caretaker_email\": \"jane@example.com\",\n      \"reason\": \"Surgery scheduled\",\n      \"created_at\": \"2024-01-15T10:30:00Z\",\n      \"updated_at\": \"2024-01-15T10:30:00Z\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"total\": 1,\n    \"total_pages\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Blood Request by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/blood-requests/550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["blood-requests", "550e8400-e29b-41d4-a716-446655440000"]
+            }
+          }
+        },
+        {
+          "name": "Create Blood Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patient_name\": \"John Doe\",\n  \"patient_age\": 45,\n  \"patient_gender\": \"male\",\n  \"blood_type\": \"O+\",\n  \"quantity_units\": 2,\n  \"urgency\": \"urgent\",\n  \"hospital_name\": \"City General Hospital\",\n  \"hospital_city\": \"Bangalore\",\n  \"hospital_zipcode\": \"560001\",\n  \"caretaker_name\": \"Jane Doe\",\n  \"caretaker_phone\": \"+919876543210\",\n  \"caretaker_email\": \"jane@example.com\",\n  \"reason\": \"Emergency surgery scheduled for tomorrow\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/blood-requests",
+              "host": ["{{base_url}}"],
+              "path": ["blood-requests"]
+            }
+          },
+          "response": [
+            {
+              "name": "Created",
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"data\": {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"request_id\": \"REQ-ABC123\",\n    \"patient_name\": \"John Doe\",\n    \"status\": \"pending\",\n    \"created_at\": \"2024-01-15T10:30:00Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Blood Request",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"in_progress\",\n  \"notes\": \"Donor found, arranging pickup\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/blood-requests/550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["blood-requests", "550e8400-e29b-41d4-a716-446655440000"]
+            }
+          }
+        },
+        {
+          "name": "Cancel Blood Request",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/blood-requests/550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["blood-requests", "550e8400-e29b-41d4-a716-446655440000"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Donors",
+      "item": [
+        {
+          "name": "List All Donors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/donors?page=1&limit=10&blood_type=O%2B&available_only=true",
+              "host": ["{{base_url}}"],
+              "path": ["donors"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "blood_type", "value": "O+", "description": "Filter by blood type" },
+                { "key": "available_only", "value": "true", "description": "Only available donors" },
+                { "key": "city", "value": "Bangalore", "disabled": true },
+                { "key": "zipcode", "value": "560001", "disabled": true }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Rahul Kumar\",\n      \"phone_number\": \"+17042477684\",\n      \"blood_type\": \"O+\",\n      \"city\": \"Bangalore\",\n      \"zipcode\": \"560001\",\n      \"address\": \"123 MG Road\",\n      \"is_available\": true,\n      \"last_donation_date\": \"2024-10-15\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"total\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Donor by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/donors/123e4567-e89b-12d3-a456-426614174000",
+              "host": ["{{base_url}}"],
+              "path": ["donors", "123e4567-e89b-12d3-a456-426614174000"]
+            }
+          }
+        },
+        {
+          "name": "Search Donors by Proximity",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/donors?proximity_search=true&search_zipcode=560001&blood_type=O%2B&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["donors"],
+              "query": [
+                { "key": "proximity_search", "value": "true" },
+                { "key": "search_zipcode", "value": "560001", "description": "Hospital/search location zipcode" },
+                { "key": "blood_type", "value": "O+" },
+                { "key": "limit", "value": "20" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search Donors Nearby",
+      "item": [
+        {
+          "name": "Search Nearby Donors (POST)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"searchZipcode\": \"560001\",\n  \"bloodType\": \"O+\",\n  \"limit\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/search-donors-nearby",
+              "host": ["{{base_url}}"],
+              "path": ["search-donors-nearby"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"donors\": [\n    {\n      \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Rahul Kumar\",\n      \"phone_number\": \"+17042477684\",\n      \"blood_type\": \"O+\",\n      \"distance_km\": 2.5,\n      \"distance_text\": \"2.5 km\"\n    }\n  ],\n  \"search_location\": {\n    \"zipcode\": \"560001\",\n    \"lat\": 12.9716,\n    \"lng\": 77.5946\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Call Transactions",
+      "item": [
+        {
+          "name": "List Call Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/call-transactions?campaign_id=REQ-ABC123&page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["call-transactions"],
+              "query": [
+                { "key": "campaign_id", "value": "REQ-ABC123", "description": "Filter by campaign/request ID" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "20" }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"789e0123-e45b-67d8-a901-234567890000\",\n      \"campaign_id\": \"REQ-ABC123\",\n      \"donor_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"name\": \"Rahul Kumar\",\n      \"phone_number\": \"+17042477684\",\n      \"blood_type\": \"O+\",\n      \"call_id\": \"conv_abc123xyz\",\n      \"availability\": \"YES\",\n      \"donor_selected\": \"YES\",\n      \"created_at\": \"2024-01-15T10:35:00Z\"\n    }\n  ],\n  \"pagination\": {\n    \"page\": 1,\n    \"limit\": 20,\n    \"total\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Call Transaction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campaign_id\": \"REQ-ABC123\",\n  \"donor_id\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"name\": \"Rahul Kumar\",\n  \"phone_number\": \"+17042477684\",\n  \"address\": \"123 MG Road\",\n  \"zip\": \"560001\",\n  \"blood_type\": \"O+\",\n  \"urgency\": \"urgent\",\n  \"reason\": \"Emergency surgery\",\n  \"hospital_location\": \"City General Hospital, Bangalore\",\n  \"call_id\": \"conv_abc123xyz\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/call-transactions",
+              "host": ["{{base_url}}"],
+              "path": ["call-transactions"]
+            }
+          }
+        },
+        {
+          "name": "Update Call Transaction (by call_id)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availability\": \"YES\",\n  \"donor_selected\": \"YES\",\n  \"eligibility\": \"eligible\",\n  \"current_location\": \"Koramangala, Bangalore\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/call-transactions?call_id=conv_abc123xyz",
+              "host": ["{{base_url}}"],
+              "path": ["call-transactions"],
+              "query": [
+                { "key": "call_id", "value": "conv_abc123xyz", "description": "ElevenLabs conversation ID" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Outbound Call",
+      "item": [
+        {
+          "name": "Trigger AI Voice Call",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donor_phone\": \"+17042477684\",\n  \"donor_name\": \"Rahul Kumar\",\n  \"donor_gender\": \"male\",\n  \"donor_blood_group\": \"O+\",\n  \"donor_address\": \"123 MG Road, Bangalore\",\n  \"urgency\": \"Within 24 hours\",\n  \"reason\": \"Emergency surgery for accident victim\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/outbound-call",
+              "host": ["{{base_url}}"],
+              "path": ["outbound-call"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"call_id\": \"conv_abc123xyz789\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Google Distance",
+      "item": [
+        {
+          "name": "Calculate Distance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"560001\",\n  \"destination\": \"560034\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/google-distance",
+              "host": ["{{base_url}}"],
+              "path": ["google-distance"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"distance\": \"8.5 km\",\n  \"duration\": \"25 mins\",\n  \"distance_meters\": 8500,\n  \"duration_seconds\": 1500\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Update Blood Request (Legacy)",
+      "item": [
+        {
+          "name": "Update Request Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "apikey",
+                "value": "{{anon_key}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"fulfilled\",\n  \"notes\": \"Blood collected from donor\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/update-blood-request?request_id=550e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{base_url}}"],
+              "path": ["update-blood-request"],
+              "query": [
+                { "key": "request_id", "value": "550e8400-e29b-41d4-a716-446655440000" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
