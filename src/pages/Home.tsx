@@ -147,7 +147,7 @@ const Home = () => {
           <Logo size="md" />
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <Link to="/auth">
+            <Link to="/dashboard">
               <Button className="medical-gradient text-primary-foreground gap-2">
                 Get Started
                 <ArrowRight size={16} />
@@ -172,7 +172,7 @@ const Home = () => {
             Our automated system finds matching donors, contacts them, and coordinates life-saving donations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/auth">
+            <Link to="/dashboard">
               <Button size="lg" className="medical-gradient text-primary-foreground gap-2 px-8">
                 <Phone size={20} />
                 Start Saving Lives
